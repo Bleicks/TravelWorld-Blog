@@ -1,0 +1,1426 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WanderLens | Blog de Viajes y Aventuras</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* --- VARIABLES & RESET --- */
+        :root {
+            --primary: #2a9d8f;
+            --primary-dark: #1d7873;
+            --secondary: #264653;
+            --accent: #e9c46a;
+            --accent-dark: #f4a261;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --border: #dee2e6;
+            
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.1);
+            --shadow-lg: 0 8px 30px rgba(0,0,0,0.12);
+            
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            
+            --container: 1200px;
+            --reading-width: 680px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            color: var(--dark);
+            background-color: var(--light);
+            font-size: 18px;
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+
+        h1 { font-size: 3.2rem; }
+        h2 { font-size: 2.5rem; }
+        h3 { font-size: 2rem; }
+        h4 { font-size: 1.5rem; }
+
+        p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--primary-dark);
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: var(--radius-sm);
+        }
+
+        .container {
+            max-width: var(--container);
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* --- HEADER & NAV --- */
+        header {
+            background-color: white;
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--secondary);
+            font-weight: 500;
+            font-size: 1rem;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a.active {
+            color: var(--primary);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--secondary);
+            cursor: pointer;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            background: linear-gradient(rgba(38, 70, 83, 0.85), rgba(38, 70, 83, 0.9)), 
+                        url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1600&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 8rem 0;
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .hero h1 {
+            color: white;
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        /* --- SEARCH BAR --- */
+        .search-container {
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            position: relative;
+        }
+
+        .search-box {
+            display: flex;
+            box-shadow: var(--shadow-lg);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            background: white;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 1.2rem 1.5rem;
+            border: none;
+            font-size: 1.1rem;
+            outline: none;
+            color: var(--dark);
+        }
+
+        .search-box button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0 2rem;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: background-color 0.3s;
+        }
+
+        .search-box button:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .search-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1.2rem;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: white;
+            color: var(--secondary);
+        }
+
+        /* --- CATEGORIES --- */
+        .categories-section {
+            padding: 4rem 0;
+            background-color: var(--light);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--accent);
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+            padding: 2.5rem 1.5rem;
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .category-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 1.8rem;
+        }
+
+        .category-card h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        .category-card .count {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* --- BLOG ARTICLES --- */
+        .articles-section {
+            padding: 4rem 0;
+            background-color: white;
+        }
+
+        .articles-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 4rem;
+        }
+
+        /* Featured Article */
+        .featured-article {
+            margin-bottom: 4rem;
+            background: white;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+        }
+
+        .featured-image {
+            height: 400px;
+            overflow: hidden;
+        }
+
+        .featured-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .featured-article:hover .featured-image img {
+            transform: scale(1.05);
+        }
+
+        .featured-content {
+            padding: 2.5rem;
+        }
+
+        .article-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .article-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .category-badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background-color: var(--accent);
+            color: var(--secondary);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+
+        .read-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary);
+            font-weight: 600;
+            margin-top: 1.5rem;
+            padding: 0.5rem 0;
+        }
+
+        .read-more i {
+            transition: transform 0.3s;
+        }
+
+        .read-more:hover i {
+            transform: translateX(5px);
+        }
+
+        /* Articles Grid */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .article-card {
+            background: white;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .article-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .article-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .article-card:hover .article-image img {
+            transform: scale(1.05);
+        }
+
+        .article-content {
+            padding: 1.5rem;
+        }
+
+        .article-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            line-height: 1.4;
+        }
+
+        .excerpt {
+            color: var(--gray);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        /* --- SIDEBAR --- */
+        .sidebar {
+            position: sticky;
+            top: 120px;
+            height: fit-content;
+        }
+
+        .sidebar-widget {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .sidebar-widget h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 2px solid var(--light-gray);
+        }
+
+        /* Popular Posts */
+        .popular-posts li {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.2rem;
+            padding-bottom: 1.2rem;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .popular-posts li:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .popular-post-img {
+            width: 80px;
+            height: 80px;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .popular-post-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .popular-post-content h4 {
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+            line-height: 1.3;
+        }
+
+        .popular-post-content .date {
+            color: var(--gray);
+            font-size: 0.85rem;
+        }
+
+        /* Newsletter */
+        .newsletter-form {
+            margin-top: 1.5rem;
+        }
+
+        .newsletter-form input {
+            width: 100%;
+            padding: 0.9rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .newsletter-form button {
+            width: 100%;
+            padding: 0.9rem;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        .newsletter-form button:hover {
+            background-color: var(--primary-dark);
+        }
+
+        /* --- PAGINATION --- */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 3rem;
+        }
+
+        .pagination a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            border-radius: var(--radius-sm);
+            background-color: white;
+            color: var(--dark);
+            font-weight: 500;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s;
+        }
+
+        .pagination a:hover {
+            background-color: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .pagination a.active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .pagination a.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* --- READING OPTIMIZATION --- */
+        .reading-optimized {
+            max-width: var(--reading-width);
+            margin: 0 auto;
+            font-size: 1.2rem;
+            line-height: 1.8;
+        }
+
+        .reading-optimized h1, 
+        .reading-optimized h2, 
+        .reading-optimized h3 {
+            margin-top: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .reading-optimized p {
+            margin-bottom: 1.8rem;
+            color: #444;
+        }
+
+        .reading-optimized img {
+            margin: 2.5rem 0;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-md);
+        }
+
+        .reading-optimized blockquote {
+            border-left: 4px solid var(--primary);
+            padding-left: 2rem;
+            margin: 2.5rem 0;
+            font-style: italic;
+            color: var(--secondary);
+            font-size: 1.3rem;
+            line-height: 1.6;
+        }
+
+        .reading-optimized .article-content {
+            padding: 0;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: var(--secondary);
+            color: white;
+            padding: 5rem 0 2rem;
+            margin-top: 5rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-col h3 {
+            color: white;
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.8rem;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background-color: var(--accent);
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-links a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 992px) {
+            .articles-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            
+            .sidebar {
+                position: static;
+                margin-top: 2rem;
+            }
+            
+            h1 { font-size: 2.8rem; }
+            h2 { font-size: 2.2rem; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: white;
+                flex-direction: column;
+                padding: 2rem;
+                box-shadow: var(--shadow-md);
+                z-index: 999;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero {
+                padding: 6rem 0;
+            }
+            
+            .hero h1 {
+                font-size: 2.3rem;
+            }
+            
+            .articles-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .search-box {
+                flex-direction: column;
+            }
+            
+            .search-box input,
+            .search-box button {
+                width: 100%;
+                border-radius: 0;
+            }
+            
+            .search-box input {
+                border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+            }
+            
+            .search-box button {
+                border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+            
+            .hero {
+                padding: 4rem 0;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .featured-content {
+                padding: 1.5rem;
+            }
+        }
+
+        /* --- READING MODE TOGGLE --- */
+        .reading-mode-toggle {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--shadow-lg);
+            z-index: 100;
+            transition: all 0.3s;
+        }
+
+        .reading-mode-toggle:hover {
+            background-color: var(--primary-dark);
+            transform: scale(1.1);
+        }
+
+        /* Dark mode for reading */
+        body.reading-mode {
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+        }
+
+        body.reading-mode .reading-optimized {
+            color: #e0e0e0;
+        }
+
+        body.reading-mode .reading-optimized p {
+            color: #cccccc;
+        }
+
+        body.reading-mode h1,
+        body.reading-mode h2,
+        body.reading-mode h3 {
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="container">
+            <div class="header-container">
+                <a href="#" class="logo">Wander<span>Lens</span></a>
+                
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="#" class="active">Inicio</a></li>
+                        <li><a href="#destinos">Destinos</a></li>
+                        <li><a href="#categorias">Categorías</a></li>
+                        <li><a href="#blog">Blog</a></li>
+                        <li><a href="#acerca">Acerca</a></li>
+                        <li><a href="#contacto">Contacto</a></li>
+                    </ul>
+                </nav>
+                
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="container">
+            <h1>Descubre el Mundo a Través de Nuestras Historias</h1>
+            <p>Guías de viaje, relatos de aventuras y consejos prácticos para exploradores modernos. Más de 500 artículos organizados por categorías.</p>
+            
+            <!-- SEARCH BAR -->
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Buscar artículos, destinos o consejos...">
+                    <button id="searchButton"><i class="fas fa-search"></i></button>
+                </div>
+                <div class="search-filters">
+                    <button class="filter-btn active" data-filter="all">Todos</button>
+                    <button class="filter-btn" data-filter="europa">Europa</button>
+                    <button class="filter-btn" data-filter="asia">Asia</button>
+                    <button class="filter-btn" data-filter="america">América</button>
+                    <button class="filter-btn" data-filter="aventura">Aventura</button>
+                    <button class="filter-btn" data-filter="gastronomia">Gastronomía</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CATEGORIES -->
+    <section id="categorias" class="categories-section">
+        <div class="container">
+            <h2 class="section-title">Explora por Categorías</h2>
+            <div class="categories-grid">
+                <div class="category-card" data-category="europa">
+                    <div class="category-icon">
+                        <i class="fas fa-landmark"></i>
+                    </div>
+                    <h3>Europa</h3>
+                    <p>Descubre la rica historia y cultura del viejo continente</p>
+                    <div class="count">128 artículos</div>
+                </div>
+                
+                <div class="category-card" data-category="asia">
+                    <div class="category-icon">
+                        <i class="fas fa-torii-gate"></i>
+                    </div>
+                    <h3>Asia</h3>
+                    <p>Explora tradiciones milenarias y paisajes impresionantes</p>
+                    <div class="count">94 artículos</div>
+                </div>
+                
+                <div class="category-card" data-category="america">
+                    <div class="category-icon">
+                        <i class="fas fa-mountain"></i>
+                    </div>
+                    <h3>América</h3>
+                    <p>Desde Alaska hasta Tierra del Fuego, aventuras infinitas</p>
+                    <div class="count">156 artículos</div>
+                </div>
+                
+                <div class="category-card" data-category="aventura">
+                    <div class="category-icon">
+                        <i class="fas fa-hiking"></i>
+                    </div>
+                    <h3>Aventura</h3>
+                    <p>Senderismo, escalada, buceo y experiencias extremas</p>
+                    <div class="count">87 artículos</div>
+                </div>
+                
+                <div class="category-card" data-category="gastronomia">
+                    <div class="category-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h3>Gastronomía</h3>
+                    <p>Sabores, recetas y experiencias culinarias alrededor del mundo</p>
+                    <div class="count">63 artículos</div>
+                </div>
+                
+                <div class="category-card" data-category="presupuesto">
+                    <div class="category-icon">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <h3>Viaje con Presupuesto</h3>
+                    <p>Consejos para viajar más gastando menos</p>
+                    <div class="count">72 artículos</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BLOG ARTICLES -->
+    <section id="blog" class="articles-section">
+        <div class="container">
+            <h2 class="section-title">Artículos Recientes</h2>
+            
+            <div class="articles-container">
+                <div class="main-content">
+                    <!-- Featured Article -->
+                    <article class="featured-article">
+                        <div class="featured-image">
+                            <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=1600&q=80" alt="Camino a Machu Picchu">
+                        </div>
+                        <div class="featured-content">
+                            <div class="article-meta">
+                                <span><i class="far fa-calendar"></i> 15 Nov, 2024</span>
+                                <span><i class="far fa-clock"></i> 8 min lectura</span>
+                                <span><i class="far fa-user"></i> María González</span>
+                            </div>
+                            <span class="category-badge">Aventura</span>
+                            <span class="category-badge">América</span>
+                            <h2>El Camino del Inca: Guía Completa para Trekking a Machu Picchu</h2>
+                            <p class="excerpt">Una guía detallada para preparar el trekking de 4 días por el Camino del Inca, incluyendo consejos de aclimatación, equipo necesario y lo que nadie te cuenta sobre esta experiencia transformadora.</p>
+                            <a href="#" class="read-more">Leer artículo completo <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <!-- Articles Grid -->
+                    <div class="articles-grid">
+                        <!-- Article 1 -->
+                        <article class="article-card" data-category="europa" data-tags="italia, gastronomia, cultura">
+                            <div class="article-image">
+                                <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=800&q=80" alt="Toscana italiana">
+                            </div>
+                            <div class="article-content">
+                                <div class="article-meta">
+                                    <span><i class="far fa-calendar"></i> 10 Nov, 2024</span>
+                                    <span><i class="far fa-clock"></i> 6 min</span>
+                                </div>
+                                <span class="category-badge">Europa</span>
+                                <span class="category-badge">Gastronomía</span>
+                                <h3>Ruta del Vino en la Toscana: Más Allá del Chianti</h3>
+                                <p class="excerpt">Descubre viñedos ocultos y bodegas familiares en la campiña toscana. Una guía para enólogos aficionados.</p>
+                                <a href="#" class="read-more">Leer más</a>
+                            </div>
+                        </article>
+
+                        <!-- Article 2 -->
+                        <article class="article-card" data-category="asia" data-tags="japon, cultura, tecnologia">
+                            <div class="article-image">
+                                <img src="https://images.unsplash.com/photo-1528164344705-47542687000d?auto=format&fit=crop&w=800&q=80" alt="Tokio de noche">
+                            </div>
+                            <div class="article-content">
+                                <div class="article-meta">
+                                    <span><i class="far fa-calendar"></i> 5 Nov, 2024</span>
+                                    <span><i class="far fa-clock"></i> 7 min</span>
+                                </div>
+                                <span class="category-badge">Asia</span>
+                                <span class="category-badge">Cultura</span>
+                                <h3>Tokio en 72 Horas: Guía para Primerizos</h3>
+                                <p class="excerpt">Cómo aprovechar al máximo tres días en la capital japonesa, desde templos antiguos hasta el futurismo de Akihabara.</p>
+                                <a href="#" class="read-more">Leer más</a>
+                            </div>
+                        </article>
+
+                        <!-- Article 3 -->
+                        <article class="article-card" data-category="presupuesto" data-tags="consejos, ahorro, planificacion">
+                            <div class="article-image">
+                                <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=800&q=80" alt="Viajero con mochila">
+                            </div>
+                            <div class="article-content">
+                                <div class="article-meta">
+                                    <span><i class="far fa-calendar"></i> 1 Nov, 2024</span>
+                                    <span><i class="far fa-clock"></i> 5 min</span>
+                                </div>
+                                <span class="category-badge">Presupuesto</span>
+                                <span class="category-badge">Consejos</span>
+                                <h3>20 Formas de Ahorrar en tu Próximo Viaje</h3>
+                                <p class="excerpt">Trucos comprobados para reducir costos en vuelos, alojamiento, comida y actividades sin sacrificar la experiencia.</p>
+                                <a href="#" class="read-more">Leer más</a>
+                            </div>
+                        </article>
+
+                        <!-- Article 4 -->
+                        <article class="article-card" data-category="aventura" data-tags="naturaleza, senderismo, escandinavia">
+                            <div class="article-image">
+                                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80" alt="Fiordos noruegos">
+                            </div>
+                            <div class="article-content">
+                                <div class="article-meta">
+                                    <span><i class="far fa-calendar"></i> 28 Oct, 2024</span>
+                                    <span><i class="far fa-clock"></i> 9 min</span>
+                                </div>
+                                <span class="category-badge">Aventura</span>
+                                <span class="category-badge">Europa</span>
+                                <h3>Trekking por los Fiordos Noruegos: Guía de Supervivencia</h3>
+                                <p class="excerpt">Todo lo que necesitas saber para caminar por los espectaculares paisajes de Noruega, incluyendo equipo y condiciones climáticas.</p>
+                                <a href="#" class="read-more">Leer más</a>
+                            </div>
+                        </article>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="pagination">
+                        <a href="#" class="disabled"><i class="fas fa-chevron-left"></i></a>
+                        <a href="#" class="active">1</a>
+                        <a href="#">2</a>
+                        <a href="#">3</a>
+                        <a href="#">4</a>
+                        <a href="#">5</a>
+                        <a href="#"><i class="fas fa-chevron-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- SIDEBAR -->
+                <aside class="sidebar">
+                    <!-- Popular Posts -->
+                    <div class="sidebar-widget">
+                        <h3>Artículos Populares</h3>
+                        <ul class="popular-posts">
+                            <li>
+                                <div class="popular-post-img">
+                                    <img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=200&q=80" alt="Islas Maldivas">
+                                </div>
+                                <div class="popular-post-content">
+                                    <h4>Islas Maldivas sin Resort: Guía para Viajeros Independientes</h4>
+                                    <div class="date">12 Oct, 2024</div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="popular-post-img">
+                                    <img src="https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=200&q=80" alt="Fotografía de viajes">
+                                </div>
+                                <div class="popular-post-content">
+                                    <h4>Guía de Fotografía de Viajes: Captura Momentos Inolvidables</h4>
+                                    <div class="date">8 Oct, 2024</div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="popular-post-img">
+                                    <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=200&q=80" alt="Machu Picchu">
+                                </div>
+                                <div class="popular-post-content">
+                                    <h4>10 Errores que Cometen los Primerizos en Machu Picchu</h4>
+                                    <div class="date">3 Oct, 2024</div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="popular-post-img">
+                                    <img src="https://images.unsplash.com/photo-1551632436-cbf8dd35adfa?auto=format&fit=crop&w=200&q=80" alt="Equipaje de viaje">
+                                </div>
+                                <div class="popular-post-content">
+                                    <h4>El Arte del Equipaje Minimalista: Viaja 2 Semanas con Solo Carry-on</h4>
+                                    <div class="date">27 Sep, 2024</div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Newsletter -->
+                    <div class="sidebar-widget">
+                        <h3>Newsletter de Viajes</h3>
+                        <p>Recibe semanalmente destinos, consejos y ofertas exclusivas en tu correo.</p>
+                        <form class="newsletter-form" id="newsletterForm">
+                            <input type="email" placeholder="Tu correo electrónico" required>
+                            <button type="submit">Suscribirme</button>
+                        </form>
+                    </div>
+
+                </aside>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="contacto">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <h3>WanderLens</h3>
+                    <p>Un blog de viajes creado por viajeros para viajeros. Compartimos experiencias auténticas, consejos prácticos y guías detalladas para inspirar tu próxima aventura.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Enlaces Rápidos</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Inicio</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Destinos</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Categorías</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Sobre Nosotros</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Contacto</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Categorías Populares</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Viajes en Europa</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Aventuras Extremas</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Gastronomía Mundial</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Viajes con Presupuesto</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Guías de Ciudades</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Contacto</h3>
+                    <ul class="footer-links">
+                        <li><a href="mailto:hola@wanderlens.com"><i class="fas fa-envelope"></i> hola@wanderlens.com</a></li>
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> Barcelona, España</a></li>
+                        <li><a href="#"><i class="fas fa-globe"></i> Español | English</a></li>
+                        <li><a href="#"><i class="fas fa-rss"></i> Suscribirse al RSS</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2024 WanderLens Blog de Viajes. Todos los derechos reservados. | Diseñado con <i class="fas fa-heart" style="color: #e9c46a;"></i> para viajeros</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- READING MODE TOGGLE -->
+    <div class="reading-mode-toggle" id="readingModeToggle">
+        <i class="fas fa-book-reader"></i>
+    </div>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.querySelector('.nav-links');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileMenuBtn.innerHTML = navLinks.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+
+        // Search Functionality
+        const searchInput = document.getElementById('searchInput');
+        const searchButton = document.getElementById('searchButton');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const articleCards = document.querySelectorAll('.article-card');
+        const categoryCards = document.querySelectorAll('.category-card');
+
+        // Filter by category
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const filter = button.getAttribute('data-filter');
+                
+                // Update active button
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                // Filter articles
+                articleCards.forEach(card => {
+                    const category = card.getAttribute('data-category');
+                    const tags = card.getAttribute('data-tags');
+                    
+                    if (filter === 'all' || category === filter || tags.includes(filter)) {
+                        card.style.display = 'block';
+                        setTimeout(() => {
+                            card.style.opacity = '1';
+                            card.style.transform = 'translateY(0)';
+                        }, 10);
+                    } else {
+                        card.style.opacity = '0';
+                        card.style.transform = 'translateY(20px)';
+                        setTimeout(() => {
+                            card.style.display = 'none';
+                        }, 300);
+                    }
+                });
+                
+                // Filter category cards
+                if (filter !== 'all') {
+                    categoryCards.forEach(card => {
+                        const category = card.getAttribute('data-category');
+                        
+                        if (category === filter) {
+                            card.style.display = 'block';
+                            setTimeout(() => {
+                                card.style.opacity = '1';
+                                card.style.transform = 'translateY(0)';
+                            }, 10);
+                        } else {
+                            card.style.opacity = '0';
+                            card.style.transform = 'translateY(20px)';
+                            setTimeout(() => {
+                                card.style.display = 'none';
+                            }, 300);
+                        }
+                    });
+                } else {
+                    categoryCards.forEach(card => {
+                        card.style.display = 'block';
+                        setTimeout(() => {
+                            card.style.opacity = '1';
+                            card.style.transform = 'translateY(0)';
+                        }, 10);
+                    });
+                }
+            });
+        });
+
+        // Search functionality
+        searchButton.addEventListener('click', performSearch);
+        searchInput.addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+
+        function performSearch() {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            
+            if (searchTerm === '') return;
+            
+            articleCards.forEach(card => {
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                const excerpt = card.querySelector('.excerpt').textContent.toLowerCase();
+                const categories = card.querySelectorAll('.category-badge');
+                let categoryText = '';
+                
+                categories.forEach(cat => {
+                    categoryText += cat.textContent.toLowerCase() + ' ';
+                });
+                
+                if (title.includes(searchTerm) || excerpt.includes(searchTerm) || categoryText.includes(searchTerm)) {
+                    card.style.display = 'block';
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 10);
+                } else {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    setTimeout(() => {
+                        card.style.display = 'none';
+                    }, 300);
+                }
+            });
+            
+            // Show message if no results
+            const visibleCards = document.querySelectorAll('.article-card[style*="display: block"]');
+            if (visibleCards.length === 0) {
+                // You could add a "no results" message here
+                console.log('No se encontraron resultados');
+            }
+        }
+
+        // Newsletter Form
+        const newsletterForm = document.getElementById('newsletterForm');
+        newsletterForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = newsletterForm.querySelector('input').value;
+            
+            // Simulate form submission
+            newsletterForm.innerHTML = `
+                <div style="text-align: center; padding: 1rem;">
+                    <i class="fas fa-check-circle" style="font-size: 2rem; color: #2a9d8f; margin-bottom: 1rem;"></i>
+                    <p>¡Gracias por suscribirte! Te hemos enviado un correo de confirmación.</p>
+                </div>
+            `;
+            
+            // In a real application, you would send this to your backend
+            console.log('Newsletter subscription:', email);
+        });
+
+        // Reading Mode Toggle
+        const readingModeToggle = document.getElementById('readingModeToggle');
+        readingModeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('reading-mode');
+            
+            // Change icon
+            if (document.body.classList.contains('reading-mode')) {
+                readingModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                readingModeToggle.title = 'Modo normal';
+            } else {
+                readingModeToggle.innerHTML = '<i class="fas fa-book-reader"></i>';
+                readingModeToggle.title = 'Modo lectura';
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                if (this.getAttribute('href') === '#') return;
+                
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Category cards click to filter
+        categoryCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const category = card.getAttribute('data-category');
+                
+                // Find and click the corresponding filter button
+                filterButtons.forEach(button => {
+                    if (button.getAttribute('data-filter') === category) {
+                        button.click();
+                    }
+                });
+                
+                // Scroll to articles section
+                document.querySelector('#blog').scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            });
+        });
+
+        // Article click simulation
+        document.querySelectorAll('.read-more, .article-card, .featured-article').forEach(element => {
+            element.addEventListener('click', (e) => {
+                // Don't trigger if clicking on a link inside
+                if (e.target.tagName === 'A' || e.target.closest('a')) return;
+                
+                // In a real blog, this would navigate to the article page
+                console.log('Navegando a artículo detallado');
+                // window.location.href = '/articulo-detallado.html';
+                
+                // For demo purposes, show a message
+                if (!e.target.classList.contains('read-more')) {
+                    alert('En un blog real, esto te llevaría a la página del artículo completo con diseño optimizado para lectura.');
+                }
+            });
+        });
+
+        // Highlight current section in navigation
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section[id]');
+            const scrollY = window.pageYOffset;
+            
+            sections.forEach(section => {
+                const sectionHeight = section.offsetHeight;
+                const sectionTop = section.offsetTop - 100;
+                const sectionId = section.getAttribute('id');
+                
+                if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+                    document.querySelector(`.nav-links a[href="#${sectionId}"]`)?.classList.add('active');
+                } else {
+                    document.querySelector(`.nav-links a[href="#${sectionId}"]`)?.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
